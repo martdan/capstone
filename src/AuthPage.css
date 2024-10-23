@@ -1,0 +1,17 @@
+/* src/components/AuthPage.css */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: auto;
+}
+
+input {
+    margin: 10px 0;
+    padding: 10px;
+}
+
+button {
+    padding: 10px;
+    margin: 10px 0;
+}
