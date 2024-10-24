@@ -2,6 +2,8 @@
 import './AuthPage.css'
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './firebase';
 import Navbar from './components/Navbar';
 import AuthPage from './components/AuthPage';
 import ShoppingPage from './components/ShoppingPage';  // Placeholder for now
@@ -13,11 +15,12 @@ import OrderSummaryPage from './components/OrderSummaryPage';
 import OrderHistoryPage from './components/OrderHistoryPage'
 
 function App() {
+  const [user] = useAuthState(auth);
+
   const handleLogout = () => {
-    firebase.auth().signOut()
+    auth.signOut()
       .then(() => {
         console.log('User logged out');
-        // You can also remove any authentication tokens or reset state if necessary
       })
       .catch((error) => {
         console.error('Error logging out: ', error);
@@ -25,7 +28,7 @@ function App() {
   };
   return (
     <Router>
-      <Navbar logout={handleLogout} />
+      {user && <Navbar logout={handleLogout} />}
       <Routes>
         <Route path="/" element={<AuthPage />} />
         <Route path="/shopping" element={<RequireAuth><ShoppingPage /></RequireAuth>} />

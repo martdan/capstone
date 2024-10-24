@@ -1,6 +1,6 @@
 // src/components/AuthPage.jsx
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 
@@ -16,8 +16,8 @@ const AuthPage = () => {
         if (isLogin) {
             // Login the user
             signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    navigate('/shopping');
+                .then(() => {
+                    navigate('/shopping'); // Redirect to shopping page after login
                 })
                 .catch((error) => {
                     console.error("Error logging in: ", error);
@@ -25,8 +25,13 @@ const AuthPage = () => {
         } else {
             // Sign up the user
             createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    navigate('/shopping');
+                .then(() => {
+                    // Sign the user out after sign up
+                    auth.signOut().then(() => {
+                        console.log("User signed up and logged out");
+                        // Toggle to login view after signing up
+                        setIsLogin(true);
+                    });
                 })
                 .catch((error) => {
                     console.error("Error signing up: ", error);
@@ -60,3 +65,4 @@ const AuthPage = () => {
 };
 
 export default AuthPage;
+

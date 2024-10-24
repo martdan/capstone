@@ -2,11 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';  // For fetching data
 import './ShoppingPage.css';  // Optional for styling
+import { useAuthState } from 'react-firebase-hooks/auth'; // Assuming you're using Firebase for auth
+import { auth } from '../firebase'; // Adjust the path as needed
 
 const ShoppingPage = () => {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [user] = useAuthState(auth); // Firebase user authentication
 
     // Fetch items from backend
     useEffect(() => {
@@ -23,17 +26,25 @@ const ShoppingPage = () => {
     }, []);
 
     const handleAddToCart = (item) => {
+        if (!user) {
+            alert("Please log in to add items to your cart.");
+            return;
+        }
+
         const cartItem = {
-            user_id: userId,
+            user_id: user.uid, // Use the authenticated user's ID
             item_id: item.item_id,
             price: item.price,
-            quantity: 1 // Assuming each addition to the cart is 1 quantity
+            quantity: 1 // Assuming each addition to the cart is for 1 quantity
         };
+
         axios.post('https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/cart', cartItem)
             .then(() => alert(`${item.item_name} added to cart!`))
-            .catch((error) => console.error('Error adding to cart: ', error));
+            .catch((error) => {
+                console.error('Error adding to cart: ', error);
+                alert('Failed to add item to cart');
+            });
     };
-
 
     if (loading) {
         return <p>Loading items...</p>;
@@ -61,3 +72,6 @@ const ShoppingPage = () => {
 };
 
 export default ShoppingPage;
+
+
+//https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/items
