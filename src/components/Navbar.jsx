@@ -3,6 +3,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
+
 const Navbar = ({ logout }) => {
     const navigate = useNavigate();
 

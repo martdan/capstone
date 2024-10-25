@@ -1,0 +1,86 @@
+/* Container styling for the entire confirmation page */
+.order-confirmation-page {
+    text-align: center;
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+    /* Light background color */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
+}
+
+/* Heading style for the page */
+.order-confirmation-page h1 {
+    font-size: 2.5rem;
+    color: #28a745;
+    /* Green color to indicate success */
+    margin-bottom: 20px;
+}
+
+/* Paragraph text style */
+.order-confirmation-page p {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/* Container for the order summary */
+.order-summary {
+    margin-top: 30px;
+}
+
+/* Each item in the order */
+.order-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    margin-bottom: 15px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    /* Light shadow for item boxes */
+}
+
+/* Styling for the item image */
+.order-item-image {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+/* Text styling for item details */
+.order-item p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+/* Total price text */
+.order-summary h2 {
+    font-size: 1.8rem;
+    color: #28a745;
+    /* Matches the success color */
+    margin-top: 20px;
+}
+
+/* Link to continue shopping */
+.order-confirmation-page a {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #007bff;
+    /* Bootstrap primary blue */
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.order-confirmation-page a:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+}

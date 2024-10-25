@@ -18,6 +18,11 @@ const SellPage = () => {
     const [user] = useAuthState(auth);  // Firebase Authentication
     const userId = user?.uid;  // Firebase user ID
 
+    // Debugging: Log userId
+    useEffect(() => {
+        console.log("User ID:", userId);  // Ensure the userId is properly set
+    }, [userId]);
+
     // Fetch items listed by the current user
     useEffect(() => {
         if (userId) {
@@ -36,13 +41,16 @@ const SellPage = () => {
     };
 
     const handleUpload = (e) => {
-        e.preventDefault();  // Prevent the default form behavior
-        if (!image) return;
+        e.preventDefault();
+        if (!image) {
+            alert("Please select an image before uploading.");
+            return;
+        }
 
         const storageRef = ref(storage, `images/${image.name}`);
         const uploadTask = uploadBytesResumable(storageRef, image);
-
         setUploading(true);
+
         uploadTask.on('state_changed',
             (snapshot) => {
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -51,6 +59,7 @@ const SellPage = () => {
             (error) => {
                 console.error('Error uploading image: ', error);
                 setUploading(false);
+                alert("Error uploading image. Please try again.");
             },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -74,7 +83,7 @@ const SellPage = () => {
             item_name: itemName,
             price: parseFloat(price),
             image_url: imageUrl,
-            user_id: userId  // Include the user_id when adding an item
+            user_id: userId // Ensure the user_id when adding an item is valid
         };
 
         try {
@@ -84,9 +93,7 @@ const SellPage = () => {
                 setIsEditing(false);
                 setEditItemId(null);
                 setUserItems((prevItems) =>
-                    prevItems.map(item =>
-                        item.item_id === editItemId ? { ...item, ...newItem } : item
-                    )
+                    prevItems.map(item => item.item_id === editItemId ? { ...item, ...newItem } : item)
                 );
             } else {
                 const response = await axios.post('https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/items', newItem);
@@ -100,10 +107,15 @@ const SellPage = () => {
             setImage(null);
             setImageUrl('');
         } catch (error) {
-            console.error('Error adding item: ', error);  // Add this to log the error
-            alert('Error adding item: ' + (error.response ? error.response.data : error.message));
+            // Improved error handling
+            console.error('Error adding item:', error?.response?.data || error.message);
+
+            // Show a more descriptive error alert
+            const errorMessage = error.response?.data?.error || error.message || 'Unknown error occurred';
+            alert('Error adding item: ' + errorMessage);
         }
     };
+
 
     // Handle item deletion
     const handleDelete = async (item_id) => {
@@ -113,6 +125,7 @@ const SellPage = () => {
             setUserItems(userItems.filter((item) => item.item_id !== item_id));
         } catch (error) {
             console.error('Error deleting item:', error);
+            alert('Error deleting item: ' + (error.response ? error.response.data : error.message));
         }
     };
 
@@ -186,6 +199,7 @@ const SellPage = () => {
 };
 
 export default SellPage;
+
 
 
 
