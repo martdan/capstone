@@ -1,42 +1,191 @@
 /* src/components/SellPage.css */
 
-.sell-container {
+/* Wrapper for the entire sell page */
+.sell-page-wrapper {
     padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Headings for the form */
+.form-heading-sell,
+.form-heading-edit {
+    font-size: 1.8rem;
+    color: #333;
     text-align: center;
+    margin-bottom: 20px;
 }
 
-.sell-form {
+.form-heading-edit {
+    color: #007bff;
+}
+
+/* Form styling */
+.item-sell-form {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    margin: auto;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Label styling */
+.form-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+/* Input fields styling */
+.input-product-title,
+.input-price,
+.input-upload {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Price container for side-by-side alignment */
+.price-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    gap: 10px;
 }
 
-label {
-    margin-bottom: 10px;
+.price-container div {
+    flex: 1;
 }
 
-input[type="text"],
-input[type="number"] {
-    padding: 10px;
-    margin-top: 5px;
-    width: 200px;
-}
-
-button {
-    padding: 10px;
-    margin-top: 15px;
+/* Upload button styling */
+.button-upload {
     background-color: #007bff;
-    color: white;
+    color: #fff;
     border: none;
+    padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 10px;
 }
 
-button:hover {
+.button-upload:hover {
     background-color: #0056b3;
 }
 
-.uploaded-image {
-    max-width: 200px;
+/* Preview image after uploading */
+.preview-uploaded-image {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
     margin-top: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* Submit button styling */
+.button-submit {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+.button-submit:hover {
+    background-color: #218838;
+}
+
+/* Listed Items Section Styling */
+.listed-items-heading {
+    font-size: 1.6rem;
+    color: #333;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.listed-items-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Message for no items listed */
+.no-items-message {
+    font-size: 1rem;
+    color: #777;
+    text-align: center;
+}
+
+/* Item card styling */
+.listed-item-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 200px;
+}
+
+/* Item image styling */
+.listed-item-image {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    /* Ensure image is resized without cropping */
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Item title and price styling */
+.listed-item-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin: 10px 0 5px;
+}
+
+.listed-item-price {
+    font-size: 1rem;
+    color: #007bff;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Edit and Delete button styling */
+.button-edit,
+.button-delete {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    width: 80px;
+}
+
+.button-edit:hover {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.button-delete:hover {
+    background-color: #ff4747;
+    color: #fff;
+    border-color: #ff4747;
 }

@@ -18,7 +18,7 @@ const CartPage = () => {
         if (user) {
             console.log("Fetching cart data for user:", user.uid);  // Debugging log
             // Fetch cart items for the authenticated user
-            axios.get(`https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/cart/${userId}`)  // Replace with your actual backend API URL
+            axios.get(`https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/cart/${userId}`)  // Replace with your actual backend API URL
                 .then((response) => {
                     console.log("Cart Data:", response.data);  // Log the cart data response
                     setCartItems(response.data);  // Set the cart items from the response
@@ -40,7 +40,7 @@ const CartPage = () => {
 
     // Handle item deletion from cart
     const handleDelete = (cart_id) => {
-        axios.delete(`https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/cart/${cart_id}`)  // Replace with your actual backend API URL
+        axios.delete(`https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/cart/${cart_id}`)  // Replace with your actual backend API URL
             .then((response) => {
                 console.log("Item deleted:", response.data);
                 // Remove the item from the local cart state after deletion
@@ -77,19 +77,22 @@ const CartPage = () => {
 
     // Return the cart page content
     return (
-        <div className="cart-page">
+        <div className="cart-page-container">
             <h1>Your Cart</h1>
-            <div className="cart-items">
+            <div className="cart-items-grid">
                 {cartItems.length === 0 ? (
-                    <p>Your cart is empty</p>
+                    <p className="empty-cart-message">Your cart is empty</p>
                 ) : (
                     cartItems.map((item) => (
-                        <div key={item.cart_id} className="cart-item">
-                            <img src={item.image_url} alt={item.item_name} className="cart-item-image" />  {/* Display the item image */}
-                            <p>Item: {item.item_name}</p>  {/* Display the item name */}
-                            <p>Price: ${item.price}</p>
-                            <p>Quantity: {item.quantity}</p>
-                            <button onClick={() => handleDelete(item.cart_id)}>Delete</button>  {/* Delete button */}
+                        <div key={item.cart_id} className="cart-item-card">
+                            <img src={item.image_url} alt={item.item_name} className="cart-item-image" />
+                            <div className="cart-item-details"> {/* Display the item image */}
+                                <h3 className="cart-item-title">Item: {item.item_name}</h3>  {/* Display the item name */}
+                                <p className="cart-item-price">Price: ${item.price}</p>
+                                <p className="cart-item-quantity">Quantity: {item.quantity}</p>
+                                <button onClick={() => handleDelete(item.cart_id)} className="delete-button">Delete</button>  {/* Delete button */}
+
+                            </div>
                         </div>
                     ))
                 )}
@@ -97,7 +100,7 @@ const CartPage = () => {
             {cartItems.length > 0 && (
                 <div className="cart-summary">
                     <h2>Total: ${totalAmount.toFixed(2)}</h2>
-                    <button onClick={handleCheckout}>Checkout</button>
+                    <button onClick={handleCheckout} className="checkout-button">Checkout</button>
                 </div>
             )}
         </div>
@@ -109,4 +112,4 @@ export default CartPage;
 
 
 
-//https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/
+//https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/

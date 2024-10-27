@@ -1,6 +1,5 @@
 // src/App.js
 
-import './AuthPage.css'
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -15,6 +14,7 @@ import WrappedCheckoutPage from './components/CheckoutPage';
 import OrderSummaryPage from './components/OrderSummaryPage';
 import OrderHistoryPage from './components/OrderHistoryPage';
 import OrderConfirmationPage from './components/OrderConfirmationPage';
+import './global.css';
 
 function App() {
   const [user] = useAuthState(auth);

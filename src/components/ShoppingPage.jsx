@@ -13,7 +13,7 @@ const ShoppingPage = () => {
 
     // Fetch items from backend
     useEffect(() => {
-        axios.get('https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/items')  // Replace with your actual API URL
+        axios.get('https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/items')  // Replace with your actual API URL
             .then((response) => {
                 setItems(response.data);
                 setLoading(false);
@@ -38,7 +38,7 @@ const ShoppingPage = () => {
             quantity: 1 // Assuming each addition to the cart is for 1 quantity
         };
 
-        axios.post('https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/cart', cartItem)
+        axios.post('https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/cart', cartItem)
             .then(() => alert(`${item.item_name} added to cart!`))
             .catch((error) => {
                 console.error('Error adding to cart: ', error);
@@ -61,9 +61,11 @@ const ShoppingPage = () => {
                 {items.map((item) => (
                     <div className="item-card" key={item.item_id}>
                         <img src={item.image_url} alt={item.item_name} className="item-image" />
-                        <h3>{item.item_name}</h3>
-                        <p>Price: ${item.price}</p>
-                        <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
+                        <h3 className="item-name">{item.item_name}</h3>
+                        <div className="item-info">
+                            <p className="item-price">Price: ${item.price}</p>
+                            <button onClick={() => handleAddToCart(item)} className="add-to-cart-button">Add to Cart</button>
+                        </div>
                     </div>
                 ))}
             </div>
@@ -74,4 +76,4 @@ const ShoppingPage = () => {
 export default ShoppingPage;
 
 
-//https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/items
+//https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/items

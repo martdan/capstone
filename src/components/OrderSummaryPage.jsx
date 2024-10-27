@@ -8,7 +8,7 @@ const OrderSummaryPage = ({ userId }) => {
 
     useEffect(() => {
         // Fetch order summary for the user
-        axios.get(`https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/order-summary/${userId}`)
+        axios.get(`https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/order-summary/${userId}`)
             .then((response) => setOrders(response.data))
             .catch((error) => console.error('Error fetching order summary: ', error));
     }, [userId]);
@@ -36,4 +36,4 @@ const OrderSummaryPage = ({ userId }) => {
 
 export default OrderSummaryPage;
 
-////https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/
+////https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/

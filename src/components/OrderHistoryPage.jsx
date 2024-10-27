@@ -14,7 +14,7 @@ const OrderHistoryPage = () => {
             console.log('Fetching order history for user:', userId);  // Debug log for userId
 
             // Fetch order history for the user
-            axios.get(`https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/order-history/${userId}`)
+            axios.get(`https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/order-history/${userId}`)
                 .then((response) => {
                     console.log('API Response:', response.data);  // Debug log for API response
                     setOrderHistory(response.data);
@@ -53,4 +53,4 @@ const OrderHistoryPage = () => {
 export default OrderHistoryPage;
 
 
-//https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev
+//https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/

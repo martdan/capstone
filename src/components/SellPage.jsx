@@ -5,6 +5,7 @@ import axios from 'axios';
 import './SellPage.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
+import './SellPage.css'
 
 const SellPage = () => {
     const [itemName, setItemName] = useState('');
@@ -26,7 +27,7 @@ const SellPage = () => {
     // Fetch items listed by the current user
     useEffect(() => {
         if (userId) {
-            axios.get(`https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/user-items?user_id=${userId}`)  // Pass user_id as query param
+            axios.get(`https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/user-items?user_id=${userId}`)  // Pass user_id as query param
                 .then((response) => {
                     setUserItems(response.data);
                 })
@@ -88,7 +89,7 @@ const SellPage = () => {
 
         try {
             if (isEditing) {
-                await axios.put(`https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/items/${editItemId}`, newItem);
+                await axios.put(`https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/items/${editItemId}`, newItem);
                 alert('Item updated successfully!');
                 setIsEditing(false);
                 setEditItemId(null);
@@ -96,7 +97,7 @@ const SellPage = () => {
                     prevItems.map(item => item.item_id === editItemId ? { ...item, ...newItem } : item)
                 );
             } else {
-                const response = await axios.post('https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/items', newItem);
+                const response = await axios.post('https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/items', newItem);
                 alert('Item added successfully!');
                 setUserItems([...userItems, response.data]);
             }
@@ -120,7 +121,7 @@ const SellPage = () => {
     // Handle item deletion
     const handleDelete = async (item_id) => {
         try {
-            await axios.delete(`https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/items/${item_id}`);
+            await axios.delete(`https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/items/${item_id}`);
             alert('Item deleted successfully!');
             setUserItems(userItems.filter((item) => item.item_id !== item_id));
         } catch (error) {
@@ -139,20 +140,23 @@ const SellPage = () => {
     };
 
     return (
-        <div className="sell-container">
-            <h1>{isEditing ? "Edit Item" : "Sell a Sports Item"}</h1>
-            <form onSubmit={handleSubmit} className="sell-form">
-                <label>
-                    Item Name:
+        <div className="sell-page-wrapper">
+            <h1 className={isEditing ? "form-heading-edit" : "form-heading-sell"}>
+                {isEditing ? "Edit Item" : "Sell a Sports Item"}
+            </h1>
+            <form onSubmit={handleSubmit} className="sitem-sell-form">
+                <label className="form-label">
+                    Product Title:
                     <input
                         type="text"
                         value={itemName}
                         onChange={(e) => setItemName(e.target.value)}
                         required
+                        className="input-product-title"
                     />
                 </label>
 
-                <label>
+                <label className="form-label">
                     Price:
                     <input
                         type="number"
@@ -160,36 +164,37 @@ const SellPage = () => {
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                         required
+                        className="input-price"
                     />
                 </label>
 
-                <label>
+                <label className="form-label">
                     Upload Image:
-                    <input type="file" onChange={handleImageChange} />
-                    <button onClick={handleUpload} disabled={uploading}>
+                    <input type="file" onChange={handleImageChange} className="input-upload" />
+                    <button onClick={handleUpload} disabled={uploading} className="button-upload">
                         {uploading ? "Uploading..." : "Upload Image"}
                     </button>
                 </label>
 
-                {imageUrl && <img src={imageUrl} alt="Uploaded" className="uploaded-image" />}
+                {imageUrl && <img src={imageUrl} alt="Uploaded" className="preview-uploaded-image" />}
 
-                <button type="submit" disabled={uploading || !imageUrl}>
+                <button type="submit" disabled={uploading || !imageUrl} className="button-submit">
                     {isEditing ? "Update Item" : "Add Item"}
                 </button>
             </form>
 
-            <h2>Your Listed Items</h2>
-            <div className="user-items">
+            <h2 className="listed-items-heading">Your Listed Items</h2>
+            <div className="listed-items-grid">
                 {userItems.length === 0 ? (
-                    <p>No items listed.</p>
+                    <p className="no-items-message">No items listed.</p>
                 ) : (
                     userItems.map((item) => (
-                        <div key={item.item_id} className="item-card">
-                            <img src={item.image_url} alt={item.item_name} />
-                            <h3>{item.item_name}</h3>
-                            <p>Price: ${item.price}</p>
-                            <button onClick={() => handleEdit(item)}>Edit</button>
-                            <button onClick={() => handleDelete(item.item_id)}>Delete</button>
+                        <div key={item.item_id} className="listed-item-card">
+                            <img src={item.image_url} alt={item.item_name} className="listed-item-image" />
+                            <h3 className="listed-item-title">{item.item_name}</h3>
+                            <p className="listed-item-price">Price: ${item.price}</p>
+                            <button onClick={() => handleEdit(item)} className="button-edit">Edit</button>
+                            <button onClick={() => handleDelete(item.item_id)} className="button-delete">Delete</button>
                         </div>
                     ))
                 )}
@@ -203,4 +208,4 @@ export default SellPage;
 
 
 
-//https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev
+//https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/

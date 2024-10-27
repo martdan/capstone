@@ -1,0 +1,112 @@
+/* Full-screen background image for the auth page without repetition */
+.auth-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url('./sport background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Ensures the background does not repeat */
+}
+
+/* Header with logo and title */
+.auth-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.auth-logo {
+    width: 200px;
+    /* Adjust as needed */
+    margin-bottom: 10px;
+}
+
+
+/* Auth container with form */
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    text-align: center;
+}
+
+.auth-container h1 {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+/* Input fields styling */
+.auth-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+/* Primary button styling */
+.auth-container button {
+    width: 100%;
+    padding: 10px;
+    margin: 15px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.auth-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Toggle button styling */
+.toggle-button {
+    background: none;
+    color: #007bff;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.toggle-button:hover {
+    text-decoration: underline;
+}
+
+/* Error message styling */
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+/* Mobile Styles */
+@media (max-width: 576px) {
+    .auth-container {
+        padding: 15px;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    .auth-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .auth-container button {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}

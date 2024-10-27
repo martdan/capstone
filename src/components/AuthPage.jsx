@@ -5,6 +5,9 @@ import axios from 'axios'; // Import axios to make API requests to your backend
 import { useAuthState } from 'react-firebase-hooks/auth'; // For checking auth state
 import { auth } from '../firebase'; // Firebase auth import
 import Navbar from './Navbar'; // Import Navbar
+import './AuthPage.css'
+import logo from './logo.png'
+import background from './sport background.png'
 
 const AuthPage = () => {
     const [email, setEmail] = useState('');
@@ -35,7 +38,7 @@ const AuthPage = () => {
                     console.log("User signed up successfully:", user);
 
                     // Send user data to backend to add to NeonSQL database
-                    axios.post('https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/people', {
+                    axios.post('https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/people', {
                         firebase_uid: user.uid,   // Firebase UID
                         email: user.email,        // User email
                         name: user.displayName    // You can add user display name if available
@@ -67,31 +70,37 @@ const AuthPage = () => {
     return (
         <div>
             {user ? <Navbar /> : null} {/* Show Navbar only if the user is logged in */}
+            <div className="auth-page" style={{ backgroundImage: `url(${background})` }}>
+                <div className="auth-header">
+                    <img src={logo} alt="Sport Mart Logo" className="auth-logo" />
+                </div>
+                <div className="auth-container">
+                    <h1>{isLogin ? "Login" : "Sign Up"}</h1>
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        <button type="submit">{isLogin ? "Login" : "Sign Up"}</button>
+                    </form>
 
-            <h1>{isLogin ? "Login" : "Sign Up"}</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit">{isLogin ? "Login" : "Sign Up"}</button>
-            </form>
+                    {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error messages */}
 
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} {/* Display error messages */}
-
-            <button onClick={() => setIsLogin(!isLogin)}>
-                {isLogin ? "Create an account" : "Already have an account? Login"}
-            </button>
+                    <button onClick={() => setIsLogin(!isLogin)} className="toggle-button">
+                        {isLogin ? "Create an account" : "Already have an account? Login"}
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };

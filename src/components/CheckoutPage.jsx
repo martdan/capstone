@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';  // Added useNavigate for redirection
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useStripe, useElements, CardElement, Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import './CheckoutPage.css';
@@ -8,23 +8,19 @@ import axios from 'axios';
 const stripePromise = loadStripe('pk_test_51QCOOVCxGoKhLvP8Sjh1FsYSvDxyEJXbUViZ02vY9fGJT0t97r2hpmv1qdp0415yehPRbEtGSfQ8d9JQlRafzxwN00UW2DwIJb'); // Replace with your Stripe publishable key
 
 const CheckoutPage = () => {
-    const { state } = useLocation();  // Retrieve the state from CartPage
-    const { cartItems = [], totalAmount = 0 } = state || {};  // Destructure and default to empty values
+    const { state } = useLocation();
+    const { cartItems = [], totalAmount = 0 } = state || {};
     const buyer_id = state?.buyer_id || 'default_buyer_id_for_testing';
     const stripe = useStripe();
     const elements = useElements();
     const [clientSecret, setClientSecret] = useState('');
-    const [isProcessing, setIsProcessing] = useState(false);  // For handling button disabled state
+    const [isProcessing, setIsProcessing] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Create a payment intent when the component mounts
         if (totalAmount > 0) {
-            console.log('Total Amount:', totalAmount);
-            console.log('Sending request to create payment intent...'); // Debugging log for totalAmount
-            axios.post('https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/create-payment-intent', { totalAmount, buyer_id, item_id: cartItems[0]?.item_id })
+            axios.post('https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/create-payment-intent', { totalAmount, buyer_id, item_id: cartItems[0]?.item_id })
                 .then((response) => {
-                    console.log('Client Secret:', response.data.clientSecret);  // Debugging log for clientSecret
                     setClientSecret(response.data.clientSecret);
                 })
                 .catch((error) => {
@@ -43,11 +39,9 @@ const CheckoutPage = () => {
             return;
         }
 
-        setIsProcessing(true);  // Disable the button while processing
+        setIsProcessing(true);
 
         const cardElement = elements.getElement(CardElement);
-
-        // Confirm card payment with Stripe
         const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: cardElement,
@@ -56,9 +50,8 @@ const CheckoutPage = () => {
 
         if (error) {
             console.error('Payment failed: ', error);
-            setIsProcessing(false);  // Re-enable button if payment fails
+            setIsProcessing(false);
         } else if (paymentIntent.status === 'succeeded') {
-            // Payment was successful, send order to backend
             const orderDetails = {
                 buyer_id: buyer_id,
                 cartItems: cartItems.map((item) => ({
@@ -68,31 +61,25 @@ const CheckoutPage = () => {
                 })),
                 totalAmount: totalAmount,
             };
-            console.log('Order Details:', orderDetails);  // Log for debugging
 
             try {
-                // Send order details to backend to insert into ordersss table
-                await axios.post('https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev/insert-order', orderDetails);
-                console.log('Order saved successfully in the database.');
-
-                // Redirect to a success page or order confirmation
+                await axios.post('https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/insert-order', orderDetails);
                 navigate('/order-confirmation', { state: { cartItems, totalAmount } });
-
             } catch (err) {
                 console.error('Error saving order to the database: ', err.response?.data || err.message);
                 alert('Failed to save order: ' + (err.response?.data?.error || err.message));
-            }
-            finally {
+            } finally {
                 setIsProcessing(false);
             }
         }
     };
 
-
     return (
-        <div className="checkout-page">
+        <div className="checkout-page-container">
             <h1>Checkout</h1>
-            <div className="checkout-summary">
+
+            {/* Order Summary Section */}
+            <div className="order-summary">
                 <h2>Summary of Items</h2>
                 {cartItems.length === 0 ? (
                     <p>No items in your cart.</p>
@@ -100,18 +87,32 @@ const CheckoutPage = () => {
                     cartItems.map((item) => (
                         <div key={item.item_id} className="checkout-item">
                             <img src={item.image_url} alt={item.item_name} className="checkout-item-image" />
-                            <p>{item.item_name}</p>
-                            <p>Price: ${item.price}</p>
-                            <p>Quantity: {item.quantity}</p>
+                            <div className="checkout-item-details">
+                                <p className="checkout-item-name">{item.item_name}</p>
+                                <p className="checkout-item-price">Price: ${item.price}</p>
+                                <p className="checkout-item-quantity">Quantity: {item.quantity}</p>
+                            </div>
                         </div>
                     ))
                 )}
-                <h2>Total: ${totalAmount.toFixed(2)}</h2>
+                <h2 className="checkout-total">Total: ${totalAmount.toFixed(2)}</h2>
             </div>
 
+            {/* Payment Form Section */}
             <form onSubmit={handlePayment} className="checkout-form">
-                <CardElement />
-                <button type="submit" disabled={!stripe || isProcessing}>
+                <label>Card Information</label>
+                <CardElement className="card-element" />
+
+                <label>Cardholder Name</label>
+                <input
+                    type="text"
+                    placeholder="Full name on card"
+                    required
+                    className="input-cardholder-name"
+                    autoComplete="off"
+                />
+
+                <button type="submit" disabled={!stripe || isProcessing} className="checkout-pay-button">
                     {isProcessing ? 'Processing...' : 'Pay'}
                 </button>
             </form>
@@ -132,6 +133,6 @@ export default WrappedCheckoutPage;
 
 
 
-//'https://298340b2-aa0c-4e4f-b71d-d1510816be54-00-2p830g929ktk4.pike.replit.dev'
+//'https://ee23a926-c235-476f-bc72-c44c89de4608-00-3suz77jp7z7v7.sisko.replit.dev/'
 
-// stripe publishable key:'pk_test_51QCOOVCxGoKhLvP8Sjh1FsYSvDxyEJXbUViZ02vY9fGJT0t97r2hpmv1qdp0415yehPRbEtGSfQ8d9JQlRafzxwN00UW2DwIJb')
+// stripe publishable key:'pk_test_51QCOOVCxGoKhLvP8Sjh1FsYSvDxyEJXbUViZ02vY9fGJT0t97r2hpmv1qdp0415yehPRbEtGSfQ8d9JQlRafzxwN00UW2DwIJb'
