@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 10px 20px;
     background-color: #333;
     color: white;
 }
@@ -18,6 +18,7 @@
     width: 150px;
     /* Adjust size as needed */
     height: auto;
+    margin-left: 10px;
 }
 
 /* Center Links with Slide Animation */
@@ -97,26 +98,42 @@
     background-color: #d93636;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
+    .navbar a {
+        font-size: 0.85rem;
+        /* Adjust font size */
+        padding: 8px;
+    }
+
+    /* Stack elements vertically if needed */
     .navbar {
         flex-direction: column;
-    }
-
-    .navbar .menu {
-        display: none;
-        /* Hide menu items initially on mobile */
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .navbar .menu-toggle {
-        display: block;
-        font-size: 1.5rem;
-        cursor: pointer;
+        align-items: flex-start;
     }
 }
 
-/* Show the menu when toggled */
-.navbar.menu-active .menu {
-    display: flex;
+/* Optional: hide text on very small screens, show icons instead */
+@media (max-width: 400px) {
+    .navbar a {
+        display: none;
+    }
+
+    .navbar .icon {
+        display: inline-block;
+    }
+}
+
+.navbar a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Adjust to fit smaller screens */
+@media (max-width: 500px) {
+    .navbar a {
+        white-space: normal;
+        /* Allow wrapping if needed */
+        text-align: center;
+    }
 }

@@ -13,3 +13,28 @@
 .order-card p {
     margin: 5px 0;
 }
+
+/* Order Summary container */
+.order-summary {
+    padding: 10px;
+    border-radius: 8px;
+    margin: 0 auto;
+    max-width: 500px;
+    /* Ensures it doesn't get too wide */
+}
+
+/* Adjust text and image alignment on small screens */
+@media (max-width: 600px) {
+    .order-summary {
+        max-width: 90%;
+        /* Fit screen better on small devices */
+    }
+
+    .order-summary h2 {
+        font-size: 1.25rem;
+    }
+
+    .order-summary p {
+        font-size: 0.9rem;
+    }
+}
